@@ -44,6 +44,7 @@ class Page extends CI_Controller {
 	}
 	public function sign(){
 		$this->User_model->add();
+		redirect('/');
 	}
 	public function logout(){
 		$this->session->sess_destroy();

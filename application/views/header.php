@@ -69,6 +69,6 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/">选呗</a>
         <span class="app-bar-divider"></span>
-        <a class="app-bar-element place-right fg-white" href="http://localhost/index.php/page/logout"><?php echo $username ?></a>
+        <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
     </div>
     <?php endif; ?>
