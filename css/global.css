@@ -1,0 +1,19 @@
+﻿body {
+    font-family: 'Microsoft YaHei' SimHei 'Segoe UI' Arial !important;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Microsoft YaHei' SimHei 'Segoe UI' Arial !important;
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+a:hover {
+    text-decoration: none;
+}
