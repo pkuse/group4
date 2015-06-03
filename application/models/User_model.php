@@ -6,7 +6,7 @@ class User_model extends CI_Model{
 		parent::__construct();
 	}
 	public function authen() {
-		$this->db->where('Email', $this->input->post('Email'));
+		$this->db->where('Name', $this->input->post('Name'));
 		$this->db->where('Pwd', md5($this->input->post('Pwd')));
 		$q = $this->db->get('USER_INFO');
 		if ($q->num_rows() > 0){

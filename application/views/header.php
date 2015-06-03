@@ -40,18 +40,21 @@
                         <div class="input-control text">
                             <span class="mif-user prepend-icon"></span>
                             <!--input type="text" name="username"-->
-                            <?php echo form_input('Email') ?>
+                            <?php echo form_input('Name') ?>
                         </div>
                         <div class="input-control text">
                             <span class="mif-lock prepend-icon"></span>
                             <!--input type="password" name="password"-->
                             <?php echo form_password('Pwd') ?>
                         </div>
-                        <label class="input-control checkbox small-check">
-                            <input type="checkbox" name="remember">
+						
+                        <!--label class="input-control checkbox small-check"-->
+                            <!--input type="checkbox" name="remember"-->
+							<!--
                             <span class="check"></span>
                             <span class="caption">自动登录</span>
                         </label>
+						-->
                         <div class="form-actions">
                             <!--
                             <button class="button" type="submit">登录</button>

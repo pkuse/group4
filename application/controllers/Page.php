@@ -43,11 +43,46 @@ class Page extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function sign(){
-		$this->User_model->add();
-		redirect('/');
+		$this->load->library('form_validation');
+		$my_rules = array(
+			array(
+				'field' => 'Name',
+				'label' => 'Name',
+				'rules' => 'required|is_unique[USER_INFO.Name]'
+			),
+			array(
+				'field' => 'Email',
+				'label' => 'Email',
+				'rules' => 'required|valid_email|is_unique[USER_INFO.Email]'
+			),
+			array(
+				'field' => 'Pwd',
+				'label' => 'Password',
+				'rules' => 'required|matches[PwdConfirm]'
+			),
+			array(
+				'field' => 'PwdConfirm',
+				'label' => 'Confirm Password',
+				'rules' => 'required'
+			)
+		);
+		$this->form_validation->set_rules($my_rules);
+		
+		if ($this->form_validation->run() == FALSE) {
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			$this->load->view('header', $data);
+			$this->load->view('signup');
+			$this->load->view('footer');
+		}
+		else {
+			$this->User_model->add();
+			redirect('/');
+		}
 	}
 	public function logout(){
 		$this->session->sess_destroy();
+
 		echo 'logout success';
 		redirect('/');
 	}
