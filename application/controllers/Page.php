@@ -12,6 +12,24 @@ class Page extends CI_Controller {
 			$user = $this->User_model->get($userid);
 			$data['username'] = $user->Name;
 		}
+		$data['votes'] = array();
+		$rawvotes = $this->Vote_model->get_all_votes();
+		foreach ($rawvotes as $v) {
+			$vote['OwnerName'] = $this->User_model->get($v->OwnerID);
+			$rawoptions = $this->Vote_model->get_options($v->ID);
+			$vote['options'] = array();
+			foreach ($rawoptions as $raw) {
+				$option['title'] = $raw->Title;
+				$option['desc'] = $raw->DescInfo;
+				$option['path'] = $raw->Image;
+				$option['support'] = $raw->Support;
+				array_push($vote['options'], $option);
+			}
+			$vote['title'] = $v->Title;
+			$vote['desc'] = $v->DescInfo;
+			$vote['createtime'] = $v->CreateTime;
+			array_push($data['votes'], $vote);
+		}
 
 		$this->load->view('header', $data);
 		$this->load->view('home');
@@ -77,7 +95,8 @@ class Page extends CI_Controller {
 		}
 		else {
 			$this->User_model->add();
-			redirect('/');
+			echo "Validation Successful";
+		//	redirect('/');
 		}
 	}
 	public function logout(){
