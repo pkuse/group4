@@ -24,9 +24,9 @@
   </head>
   <body>
     <!-- 顶栏（未登录状态） -->
-    <?php if ($userid == -1): ?>
+    <?php if (0 && $userid == -1): ?>
         <div class="app-bar" data-role="appbar">
-            <a class="app-bar-element" href="/">选呗</a>
+            <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
             <span class="app-bar-divider"></span>
             <a class="app-bar-element place-right fg-white" href="/index.php/signup">注册</a>
             <div class="app-bar-element place-right">
@@ -72,6 +72,7 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/">选呗</a>
         <span class="app-bar-divider"></span>
+        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="/images/defaultavatar.png" /></a>
         <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
     </div>
     <?php endif; ?>
