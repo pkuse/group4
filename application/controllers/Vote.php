@@ -32,17 +32,17 @@ class Vote extends CI_Controller {
 
 		$options_title = $this->input->post('vote_options_title');
 		$options_desc = $this->input->post('vote_options_desc');
-		$options_pic = $this->input->post('vote_options_pic');
+		$options_pic = 'vote_options_pic_';
 
 		$options_count = count($options_desc);
-		echo $options_count;
 		if ($options_count < 2) {
 			redirect('');
 		}
 		else {
 			$upload_config = array(
-				'upload_path' => '/img/vote_pictures/',
-				'allowed_type' => 'gif|jpg|png',
+				'upload_path' => './img/vote_pics/',
+				'allowed_types' => 'gif|jpg|jpeg|png',
+				'file_name' => 'vote_pic',
 				'max_size' => '2048'
 			);
 
@@ -52,28 +52,57 @@ class Vote extends CI_Controller {
 
 			$flag = TRUE;
 
-			// Upload pictures
 			for ($i = 0; $i < $options_count; $i++) {
-				echo $i;
-				if (!$this->upload->do_upload($options_pic[$i])) {
+				$options_pic_field = $options_pic . $i;
+				if (!$this->upload->do_upload($options_pic_field)) {
+					$data['error'] = $this->upload->display_errors();
+					$flag = FALSE;
+					break;
+				}
+				$file_name = $this->upload->data('file_name');
+				$options_path[$i] = $upload_config['upload_path'] . $file_name;
+			}
+
+
+			if($flag == TRUE) {
+				echo "Upload Success!<br/>";
+				$vote_id = $this->Vote_model->add_vote($user_id, $vote_title, $vote_desc, $vote_duetime=0);
+				echo $vote_id;
+				for ($i = 0; $i < $options_count; $i++)
+					$this->Vote_model->add_option($vote_id, $options_title[$i], $options_desc[$i], $options_path[$i]);
+			
+			}
+
+			/*
+			// Upload pictures
+			for ($i = 0; $i < $options_count; ++$i){
+				$pic = 'vote_options_pic_' . $i;
+				echo "title<br>";
+				echo $options_title[$i];
+				echo "<br>pic:<br>";
+				echo $pic;
+				echo "<br>";
+				if (!$this->upload->do_upload($pic)) {
 					$error_message = array('error' => $this->upload->display_errors());
 					$flag = FALSE;
-					echo "Ha";
-					echo $error_message['error'];
+					echo "upload failed<br>";
+					echo $this->upload->display_errors('<p>', '</p>');
 					//break;
 				}
 				else {
-					$options_path[$i] = $upload_config['upload_path'] + $this->upload->data('file_name');
+					echo "upload success<br>";
+					//$option_path[$i] = $upload_config['upload_path'] + $this->upload->data('file_name');
+					array_push($options_path, $upload_config['upload_path'] + $this->upload->data('file_name'));
 				}
 			}
 
 			// All upload success
 			if ($flag == TRUE) {
-				$vote_id = $this->Vote_model->add_vote($user_id, $vote_title, $vote_desc, $vote_duetime);
+				$vote_id = $this->Vote_model->add_vote($user_id, $vote_title, $vote_desc, $vote_duetime=0);
 				for ($i = 0; $i < $options_count; $i++) {
 					$this->Vote_model->add_option($vote_id, $options_title[$i], $options_desc[$i], $options_path[$i]);
 				}
-			}
+			}*/
 		}
 	}
 }

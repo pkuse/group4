@@ -21,10 +21,11 @@
       <script src="/js/jquery-1.9.1.min.js"></script>
       <script src="/js/bootstrap.min.js"></script>
       <script src="/js/metro.min.js"></script>
+	  <script src="/js/imgpreview.js"></script>
   </head>
   <body>
     <!-- 顶栏（未登录状态） -->
-    <?php if (0 && $userid == -1): ?>
+    <?php if ($userid == -1): ?>
         <div class="app-bar" data-role="appbar">
             <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
             <span class="app-bar-divider"></span>
@@ -60,7 +61,7 @@
                             <button class="button" type="submit">登录</button>
                         -->
                         <?php echo form_submit('submit', '登陆') ?>
-                        <a class="button link" href="/register">没有账号？</a>
+                        <a class="button link" href="/index.php/signup">没有账号？</a>
                     </div>
                     <?php echo form_close() ?>
                     <!--/form-->
@@ -72,7 +73,8 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/">选呗</a>
         <span class="app-bar-divider"></span>
-        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="/images/defaultavatar.png" /></a>
+        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="/img/defaultavatar.png" /></a>
         <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
+		<a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a>
     </div>
     <?php endif; ?>

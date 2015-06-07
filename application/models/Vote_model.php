@@ -10,8 +10,8 @@ class Vote_model extends CI_Model {
 		$vote_data['DueTime'] = $due_time;
 		$this->db->insert('VOTE_INFO', $vote_data);
 		$query = $this->db->query("SELECT ID FROM VOTE_INFO ORDER BY CreateTime DESC LIMIT 1");
-		if ($query->row_num() > 0) {
-			$row = $query->row();
+		if ($query->num_rows() > 0) {
+			$row = $query->row(0);
 			return $row->ID;
 		}
 		else {
@@ -25,7 +25,7 @@ class Vote_model extends CI_Model {
 		$option_title['Title'] = $title;
 		$option_data['DescInfo'] = $desc;
 		$option_data['Image'] = $pic_path;
-		$this->db->insert('VOTE_INFO', $option_data);
+		$this->db->insert('VOTE_OPTION', $option_data);
 	}
 
 	public function get_all_votes() {

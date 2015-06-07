@@ -15,7 +15,12 @@ class Page extends CI_Controller {
 		$data['votes'] = array();
 		$rawvotes = $this->Vote_model->get_all_votes();
 		foreach ($rawvotes as $v) {
-			$vote['OwnerName'] = $this->User_model->get($v->OwnerID);
+		//	echo $v->ID;
+		//	echo "vote id<br>";
+		//	echo $v->Title;
+		//	echo "<br>";
+			$voye = array();
+			$vote['ownername'] = $this->User_model->get($v->OwnerID);
 			$rawoptions = $this->Vote_model->get_options($v->ID);
 			$vote['options'] = array();
 			foreach ($rawoptions as $raw) {
@@ -65,25 +70,31 @@ class Page extends CI_Controller {
 		$my_rules = array(
 			array(
 				'field' => 'Name',
-				'label' => 'Name',
-				'rules' => 'required|is_unique[USER_INFO.Name]'
+				'label' => '用户名',
+				'rules' => 'required|min_length[5]|max_length[12]|is_unique[USER_INFO.Name]'
 			),
 			array(
 				'field' => 'Email',
-				'label' => 'Email',
+				'label' => '邮箱',
 				'rules' => 'required|valid_email|is_unique[USER_INFO.Email]'
 			),
 			array(
 				'field' => 'Pwd',
-				'label' => 'Password',
-				'rules' => 'required|matches[PwdConfirm]'
+				'label' => '密码',
+				'rules' => 'required|min_length[6]|max_length[20]|matches[PwdConfirm]'
 			),
 			array(
 				'field' => 'PwdConfirm',
-				'label' => 'Confirm Password',
-				'rules' => 'required'
+				'label' => '确认密码',
+				'rules' => 'required|min_length[6]|max_length[20]'
 			)
 		);
+		$this->form_validation->set_message('required', '请输入{field}！');
+		$this->form_validation->set_message('min_length', '{field}至少需要{param}个字符！');
+		$this->form_validation->set_message('max_length', '{field}最多只能{param}个字符！');
+		$this->form_validation->set_message('valid_email', '{field}地址不合法！');
+		$this->form_validation->set_message('is_unique', '{field}已被使用！');
+		$this->form_validation->set_message('matches', '两次密码不匹配！');
 		$this->form_validation->set_rules($my_rules);
 		
 		if ($this->form_validation->run() == FALSE) {
