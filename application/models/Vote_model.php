@@ -29,12 +29,55 @@ class Vote_model extends CI_Model {
 	}
 
 	public function get_all_votes() {
-		$query = $this->db->query("SELECT * FROM VOTE_INFO");
+		$query = $this->db->query("SELECT * FROM VOTE_INFO ORDER BY CreateTime DESC");
 		return $query->result();
 	}
 
 	public function get_options($vote_id) {
 		$query = $this->db->get_where('VOTE_OPTION', array('VoteID' => $vote_id));
+		return $query->result();
+	}
+	public function get($id) {
+		$query = $this->db->get_where("VOTE_INFO", array('ID' => $id));
+		if ($query->num_rows() == 1)
+			return $query->row(0);
+		else return NULL;
+	}
+
+	public function get_followed($user_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_FOLLOW WHERE UserID = $user_id ORDER BY FollowTime DESC");
+		$votes = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$q = $this->db->get_where("VOTE_INFO", array('ID' => $row->VoteID));
+				foreach ($q->result() as $r)
+					array_push($votes, $r);
+			}
+		}
+		return $votes;
+	}
+
+	public function get_voted_record($user_id, $vote_id) {
+		$query = $this->db->get_where("VOTE_RECORD", array('UserID' => $user_id, 'VoteID' => $vote_id));
+		if ($query->num_rows() == 1)
+			return $query->row(0);
+		else return NULL;
+	}
+
+	public function get_voted($user_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE UserID = $user_id ORDER BY CreateTime DESC");
+		$votes = array();
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$q = $this->db->get_where("VOTE_INFO", array('ID' => $row->VoteID));
+				foreach ($q->result() as $r) 
+					array_push($votes, $r);
+			}
+		}
+		return $votes;
+	}
+	public function get_published($user_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_INFO WHERE OwnerID = $user_id ORDER BY CreateTime DESC");
 		return $query->result();
 	}
 }

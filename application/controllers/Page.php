@@ -11,16 +11,15 @@ class Page extends CI_Controller {
 		}else{
 			$user = $this->User_model->get($userid);
 			$data['username'] = $user->Name;
+			$data['avatar'] = $user->Avatar;
 		}
 		$data['votes'] = array();
 		$rawvotes = $this->Vote_model->get_all_votes();
 		foreach ($rawvotes as $v) {
-		//	echo $v->ID;
-		//	echo "vote id<br>";
-		//	echo $v->Title;
-		//	echo "<br>";
-			$voye = array();
-			$vote['ownername'] = $this->User_model->get($v->OwnerID);
+			$vote = array();
+			$owner = $this->User_model->get($v->OwnerID);
+			$vote['ownername'] = $owner->Name;
+			$vote['owneravatar'] = $owner->Avatar;
 			$rawoptions = $this->Vote_model->get_options($v->ID);
 			$vote['options'] = array();
 			foreach ($rawoptions as $raw) {
@@ -89,12 +88,12 @@ class Page extends CI_Controller {
 				'rules' => 'required|min_length[6]|max_length[20]'
 			)
 		);
-		$this->form_validation->set_message('required', '请输入{field}！');
-		$this->form_validation->set_message('min_length', '{field}至少需要{param}个字符！');
-		$this->form_validation->set_message('max_length', '{field}最多只能{param}个字符！');
-		$this->form_validation->set_message('valid_email', '{field}地址不合法！');
-		$this->form_validation->set_message('is_unique', '{field}已被使用！');
-		$this->form_validation->set_message('matches', '两次密码不匹配！');
+		$this->form_validation->set_message('required', '您还未输入{field}!');
+		$this->form_validation->set_message('min_length', '{field}至少需要{param}个字符!');
+		$this->form_validation->set_message('max_length', '{field}最多只能{param}个字符!');
+		$this->form_validation->set_message('valid_email', '{field}不是合法的邮箱地址!');
+		$this->form_validation->set_message('is_unique', '{field}已经被使用，请尝试登陆!');
+		$this->form_validation->set_message('matches', '两次密码不匹配');
 		$this->form_validation->set_rules($my_rules);
 		
 		if ($this->form_validation->run() == FALSE) {
@@ -107,7 +106,7 @@ class Page extends CI_Controller {
 		else {
 			$this->User_model->add();
 			echo "Validation Successful";
-		//	redirect('/');
+			redirect('/');
 		}
 	}
 	public function logout(){
@@ -115,5 +114,206 @@ class Page extends CI_Controller {
 
 		echo 'logout success';
 		redirect('/');
+	}
+
+	public function phonecenter() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['avatar'] = $user->Avatar;
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/phonecenter');
+			$this->load->view('footer');
+		}
+	}
+
+	public function userinfo() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['useremail'] = $user->Email;
+			$data['avatar'] = $user->Avatar;
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/center');
+			$this->load->view('usercenter/userinfo');
+			$this->load->view('footer');
+		}
+	}
+
+	public function editprofile() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['useremail'] = $user->Email;
+			$data['avatar'] = $user->Avatar;
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/center');
+			$this->load->view('usercenter/editprofile');
+			$this->load->view('footer');
+		}
+	}
+
+	public function submit_edit() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$this->User_model->update_profile($userid);
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['avatar'] = $user->Avatar;
+
+		}
+	}
+	public function followhistory() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['avatar'] = $user->Avatar;
+			$data['votes'] = array();
+			$raw_votes = $this->Vote_model->get_followed($userid);
+			foreach ($raw_votes as $raw_v) {
+				$vote = array();
+				$owner = $this->User_model->get($raw_v->OwnerID);
+				$vote['ownername'] = $owner->Name;
+				$vote['owneravatar'] = $owner->Avatar;
+				$raw_options = $this->Vote_model->get_options($raw_v->ID);
+				$vote['options'] = array();
+				foreach ($raw_options as $raw_p) {
+					$option['title'] = $raw_p->Title;
+					$option['desc'] = $raw_p->DescInfo;
+					$option['path'] = $raw_p->Image;
+					$option['support'] = $raw_p->Support;
+					array_push($vote['options'], $option);
+				}
+				$vote['title'] = $raw_v->Title;
+				$vote['desc'] = $raw_v->DescInfo;
+				$vote['status'] = $raw_v->Status;
+				$vote['createtime'] = $raw_v->CreateTime;
+				array_push($data['votes'], $vote);
+			}
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/center');
+			$this->load->view('usercenter/followh');
+			$this->load->view('footer');
+		}
+	}
+
+	public function votehistory() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['avatar'] = $user->Avatar;
+			$data['votes'] = array();
+			$raw_votes = $this->Vote_model->get_voted($userid);
+			foreach ($raw_votes as $raw_v) {
+				$vote = array();
+				$owner = $this->User_model->get($raw_v->OwnerID);
+				$vote['ownername'] = $owner->Name;
+				$vote['owneravatar'] = $owner->Avatar;
+				$record = $this->Vote_model->get_voted_record($userid, $raw_v->ID);
+				$vote['record']['option'] = $record->OptionID;
+				$vote['record']['comment'] = $record->Comment;
+				$vote['record']['createtime'] = $record->CreateTime;
+				$raw_options = $this->Vote_model->get_options($raw_v->ID);
+				$vote['options'] = array();
+				foreach ($raw_options as $raw_p) {
+					$option['title'] = $raw_p->Title;
+					$option['desc'] = $raw_p->DescInfo;
+					$option['path'] = $raw_p->Image;
+					$option['support'] = $raw_p->Support;
+					array_push($vote['options'], $option);
+				}
+				$vote['title'] = $raw_v->Title;
+				$vote['desc'] = $raw_v->DescInfo;
+				$vote['status'] = $raw_v->Status;
+				$vote['createtime'] = $raw_v->CreateTime;
+				array_push($data['votes'], $vote);
+			}
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/center');
+			$this->load->view('usercenter/voteh');
+			$this->load->view('footer');
+		}
+	}
+
+	public function publishhistory() {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+			echo "您还未登陆";
+		}else{
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['userdesc'] = $user->Info;
+			$data['avatar'] = $user->Avatar;
+			$data['votes'] = array();
+			$raw_votes = $this->Vote_model->get_published($userid);
+			foreach ($raw_votes as $raw_v) {
+				$vote = array();
+				$owner = $this->User_model->get($raw_v->OwnerID);
+				$vote['ownername'] = $owner->Name;
+				$vote['owneravatar'] = $owner->Avatar;
+				$raw_options = $this->Vote_model->get_options($raw_v->ID);
+				$vote['options'] = array();
+				foreach ($raw_options as $raw_p) {
+					$option['title'] = $raw_p->Title;
+					$option['desc'] = $raw_p->DescInfo;
+					$option['path'] = $raw_p->Image;
+					$option['support'] = $raw_p->Support;
+					array_push($vote['options'], $option);
+				}
+				$vote['title'] = $raw_v->Title;
+				$vote['desc'] = $raw_v->DescInfo;
+				$vote['status'] = $raw_v->Status;
+				$vote['createtime'] = $raw_v->CreateTime;
+				array_push($data['votes'], $vote);
+			}
+			$this->load->view('header', $data);
+			$this->load->view('usercenter/center');
+			$this->load->view('usercenter/publishh');
+			$this->load->view('footer');
+		}
 	}
 }

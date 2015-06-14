@@ -11,19 +11,24 @@
     <link href="/css/metro.css" rel="stylesheet" />
     <link href="/css/metro-icons.css" rel="stylesheet" />
     <link href="/css/global.css" rel="stylesheet" />
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
-      <script src="/js/jquery-1.9.1.min.js"></script>
-      <script src="/js/bootstrap.min.js"></script>
-      <script src="/js/metro.min.js"></script>
-	  <script src="/js/imgpreview.js"></script>
-  </head>
-  <body>
+	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/metro.min.js"></script>
+	<script src="/js/imgpreview.js"></script>
+    <style>
+    .carousel-inner{
+      width: 250px;
+      height: 160px;
+    }
+    </style>
+</head>
+<body>
     <!-- 顶栏（未登录状态） -->
     <?php if ($userid == -1): ?>
         <div class="app-bar" data-role="appbar">
@@ -73,7 +78,7 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/">选呗</a>
         <span class="app-bar-divider"></span>
-        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="/img/defaultavatar.png" /></a>
+        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="<?php echo $avatar?>" /></a>
         <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
 		<a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a>
     </div>

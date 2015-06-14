@@ -1,0 +1,71 @@
+div#header {}
+div#photo {
+	border-style: solid;
+	border-left-width: 120px; 
+	border-right-width: 120px;
+	border-color:#E6E6F2;
+}
+div#discription{
+	height: 150px; 
+	background-color: #0080FF; 
+	border-style: solid;
+	border-top-width: 0px; 
+	border-left-width: 120px; 
+	border-right-width: 120px; 
+	border-color:#E6E6F2;
+	margin-top:0px; 
+}
+div#comment{
+	border-style: solid;
+	border-left-width: 120px; 
+	border-right-width: 120px;
+	border-color:#E6E6F2;
+}
+div#others{
+	border-style: solid;
+	border-left-width: 120px; 
+	border-right-width: 120px;
+	border-color:#E6E6F2;
+}
+p#result{}
+div#vote{
+	border-style: solid;
+	border-left-width: 120px; 
+	border-right-width: 120px;
+	border-color:#E6E6F2;
+}
+div#comment{
+	border-style: solid;
+	border-left-width: 120px; 
+	border-right-width: 120px;
+	border-color:#E6E6F2;
+	background-color: #E6E6F2;
+}
+.id{}
+.dis{}
+.time{}
+.Input_text {     
+	width: 485px;     
+	height: 111px;     
+	padding: 5px;     
+	outline: none;     
+	border: 0px solid #fff;     
+	resize: none;     
+	font: 13px "微软雅黑", Arial, Helvetica, sans-serif;     
+	-moz-border-radius: 5px;     
+	-webkit-border-radius: 5px;     
+	border-radius: 5px;     
+}    
+.postBtn {     
+	float: rightright;     
+	font: 13px "微软雅黑", Arial, Helvetica, sans-serif;     
+	color: #808080;     
+	padding: 9px 20px 7px 20px;        
+}      
+.postBtn:hover {     
+	color: #333;
+	background-color: #efefef;     
+}     
+.postBtn:active {     
+	padding: 10px 20px 6px 20px;     
+}        

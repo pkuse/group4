@@ -36,7 +36,7 @@ class Vote extends CI_Controller {
 
 		$options_count = count($options_desc);
 		if ($options_count < 2) {
-			redirect('');
+			redirect('/');
 		}
 		else {
 			$upload_config = array(
@@ -70,40 +70,95 @@ class Vote extends CI_Controller {
 				echo $vote_id;
 				for ($i = 0; $i < $options_count; $i++)
 					$this->Vote_model->add_option($vote_id, $options_title[$i], $options_desc[$i], $options_path[$i]);
+				redirect('/');
 			
 			}
-
-			/*
-			// Upload pictures
-			for ($i = 0; $i < $options_count; ++$i){
-				$pic = 'vote_options_pic_' . $i;
-				echo "title<br>";
-				echo $options_title[$i];
-				echo "<br>pic:<br>";
-				echo $pic;
-				echo "<br>";
-				if (!$this->upload->do_upload($pic)) {
-					$error_message = array('error' => $this->upload->display_errors());
-					$flag = FALSE;
-					echo "upload failed<br>";
-					echo $this->upload->display_errors('<p>', '</p>');
-					//break;
-				}
-				else {
-					echo "upload success<br>";
-					//$option_path[$i] = $upload_config['upload_path'] + $this->upload->data('file_name');
-					array_push($options_path, $upload_config['upload_path'] + $this->upload->data('file_name'));
-				}
-			}
-
-			// All upload success
-			if ($flag == TRUE) {
-				$vote_id = $this->Vote_model->add_vote($user_id, $vote_title, $vote_desc, $vote_duetime=0);
-				for ($i = 0; $i < $options_count; $i++) {
-					$this->Vote_model->add_option($vote_id, $options_title[$i], $options_desc[$i], $options_path[$i]);
-				}
-			}*/
 		}
 	}
-}
+	public function view($id){
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+		} else {
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['useravatar'] = $user->Avatar;
+		}
+		
+		#set vote info
+		$vote = array();
+		$vote['id'] = $id;
+		$rawvote = $this->Vote_model->get($id);
+		$vote['title'] = 'default vote title';
+		$vote['desc'] = $rawvote->DescInfo;
+		
+		#set owner info 
+		$vote['ownerid'] = $rawvote->OwnerID;
+		#echo "userid: " + $vote['ownerid'] + "<br />";
+		$owner = $this->User_model->get($vote['ownerid']);
+		$vote['ownername'] = $owner->Name;
+		$vote['owneravatar'] = $owner->Avatar;
+		
+		#set options info
+		$options = array();
+		$rawoptions = $this->Vote_model->get_options($id);
+		$vote['participant'] = 0; #total number of the vote participants
+		foreach($rawoptions as $rawoption){
+			$option = array();
+			$option['id'] = $rawoption->ID;
+			$option['title'] = 'default option title';
+			$option['image'] = $rawoption->Image;
+			$option['desc'] = $rawoption->DescInfo;
+			$option['support'] = $rawoption->Support;
+			$vote['participant'] += $option['support'];
+			array_push($options, $option);
+		}
 
+		$vote['options'] = $options;
+		$data['vote'] = $vote;
+		$this->load->view('header', $data);
+		#echo $id;
+		$this->load->view('viewvote', $data);
+		$this->load->view('footer');
+	}
+
+	public function vote($voteid, $optionid) {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+		} else {
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['useravatar'] = $user->Avatar;
+		}
+		$v = $this->User_model->vote($userid, $voteid, $optionid);
+		if ($v == -1) {
+			echo "投票失败";
+		}
+		else 
+			redirect('/');
+	}
+
+	public function comment($voteid) {
+		$userid = $this->session->userdata('userid');
+		$data['userid'] = $userid;
+		if (!isset($userid)){
+			$data['userid'] = -1;
+			$data['username'] = 'null';
+		} else {
+			$user = $this->User_model->get($userid);
+			$data['username'] = $user->Name;
+			$data['useravatar'] = $user->Avatar;
+		}
+		$v = $this->User_model->comment($userid, $voteid);
+		if ($v == -1) {
+			echo "评论失败";
+		}
+		else 
+			redirect('/');
+	}
+}
