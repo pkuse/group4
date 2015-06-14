@@ -48,17 +48,17 @@
 					</a>
 				</div>
 				<div class="caption" style="height:200px">
-					<h3><a href=""><?php echo $vote["title"] ?></a></h3>
+					<h3><a href="/index.php/vote/view/<?php echo $vote['id']?>"><?php echo $vote["title"] ?></a></h3>
 					<p>描述：<?php echo $vote["desc"] ?></p>
 					<p style="font-size:80%">
 						<span class="glyphicon glyphicon-user"></span>
-						125&nbsp
+						<?php echo $vote['part_num'] ?>&nbsp
 						<span class="glyphicon glyphicon-comment"></span>
-						36&nbsp
+						<?php echo $vote['comment_num'] ?>&nbsp
 						<span class="glyphicon glyphicon-star"></span>
-						57&nbsp
+						<?php echo $vote['follow_num'] ?>&nbsp
                     </p>
-                    <a href="#">取消关注</a>
+                    <a href="/index.php/vote/follow">取消关注</a>
 				</div>
 			</div>
 		</div>

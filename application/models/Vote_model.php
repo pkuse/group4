@@ -22,7 +22,7 @@ class Vote_model extends CI_Model {
 
 	public function add_option($vote_id, $title, $desc, $pic_path) {
 		$option_data['VoteID'] = $vote_id;
-		$option_title['Title'] = $title;
+		$option_data['Title'] = $title;
 		$option_data['DescInfo'] = $desc;
 		$option_data['Image'] = $pic_path;
 		$this->db->insert('VOTE_OPTION', $option_data);
@@ -79,6 +79,40 @@ class Vote_model extends CI_Model {
 	public function get_published($user_id) {
 		$query = $this->db->query("SELECT * FROM VOTE_INFO WHERE OwnerID = $user_id ORDER BY CreateTime DESC");
 		return $query->result();
+	}
+
+	public function get_comments($vote_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE VoteID = $vote_id AND Comment IS NOT NULL");
+		return $query->result();
+	}
+	public function get_participate_num($vote_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE VoteID = $vote_id");
+		return $query->num_rows();
+	}
+
+	public function get_comment_num($vote_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE VoteID = $vote_id AND Comment IS NOT NULL");
+		return $query->num_rows();
+	}
+
+	public function get_follow_num($vote_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_FOLLOW WHERE VoteID = $vote_id");
+		return $query->num_rows();
+	}
+
+	public function close($user_id, $vote_id) {
+		$query = $this->db->query("SELECT * FROM VOTE_INFO WHERE ID = $vote_id AND OwnerID = $user_id");
+		if ($query->num_rows() <= 0) {
+			return -1;
+		}
+		else {
+			echo $vote_id;
+			echo "<br />";
+			echo $query->row()->Status;
+			// $vote['Status'] = 0;
+			// $this->db->update("VOTE_INFO", $vote, array("ID" => $vote_id));
+			return 0;
+		}
 	}
 }
 

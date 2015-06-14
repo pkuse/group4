@@ -5,8 +5,9 @@
 		<p style="text-align: center"><?php echo $userdesc ?></p>
 		<hr />
 		<ul class="nav nav-list " style="text-align: center ">
-			<li class="active"style="border-top: 1px solid #ddd ;background-color:#ddd">
-				<a href="/index.php/page/userinfo"><p><strong>个人信息</strong></p></a>
+		<!-- style="border-top: 1px solid #ddd ;background-color:#ddd" -->
+			<li >
+				<a href="/index.php/page/userinfo"><p>个人信息</p></a>
 			</li>
 			<li><a href="/index.php/page/followhistory"><p>关注的投票</p></a></li>	
 			<li><a href="/index.php/page/votehistory"><p>参与的投票</p></a></li>

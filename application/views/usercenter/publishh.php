@@ -49,42 +49,57 @@
 					</a>
 				</div>
 				<div class="caption" style="height:200px">
-					<h3><a href=""><?php echo $vote["title"] ?></a></h3>
+					<h3><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
 					<p>描述：<?php echo $vote["desc"] ?></p>
 					<p>
 						<p style="font-size:80%">
 							<span class="glyphicon glyphicon-user"></span>
-							125&nbsp
+							<?php echo $vote['part_num'] ?>&nbsp
 							<span class="glyphicon glyphicon-comment"></span>
-							36&nbsp
+							<?php echo $vote['comment_num'] ?>&nbsp
 							<span class="glyphicon glyphicon-star"></span>
-							57&nbsp
-                    	</p>
-						<a id="modal-280745" href="#modal-container-280745" role="button" class="btn btn-link" data-toggle="modal">关闭投票</a>
-						<div class="modal fade" id="modal-container-280745" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-										<h4 class="modal-title" id="myModalLabel"></h4>
-									</div>
-									<div class="modal-body"> 确认关闭此投票？</div>
-									<div class="modal-footer">
-										 <button type="button" class="btn btn-default" data-dismiss="modal">否</button> <a class="btn btn-primary" href="#cancel">是</a>
-									</div>
-								</div>
-							</div>
-						</div>
+							<?php echo $vote['follow_num'] ?>&nbsp
+						</p>
+						<a role="button" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-voteid=<?php echo $vote['id'] ?>>关闭投票</a>
 					</p>
 				</div>
 			</div>
 		</div>
 	<?php endforeach ?>
+	<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">提示：</h4>
+				</div>
+				<div class="modal-body"> 确认关闭此投票？</div>
+				<div class="modal-footer">
+					<?php echo form_open("/vote/close_vote") ?>
+					<input id="modalvoteid" type="text" name="voteid" value="<?php echo $vote['id'] ?>" style="display: none">
+					<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+					<button type="button submit" class="btn btn-promary">是</button>
+					<?php echo form_close() ?>
+					<!-- <button type="button submit" class="btn btn-default" data-dismiss="modal">否</button> <a class="btn btn-primary" href="#cancel">是</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 </div>
 </div>
 <br/><br/><br/>
+<script>
+$('#myModal').on('show.bs.modal', function(event){
+	var button = $(event.relatedTarget);
+	var voteid = button.data('voteid');
+
+	$('#modalvoteid').attr('value', voteid);
+
+});
+</script>
+
 
 
 

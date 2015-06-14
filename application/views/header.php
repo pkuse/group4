@@ -78,7 +78,7 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/">选呗</a>
         <span class="app-bar-divider"></span>
-        <a class="app-bar-element place-right"><img style="max-height: 80%; vertical-align: middle" src="<?php echo $avatar?>" /></a>
+        <a class="app-bar-element place-right" href="/index.php/page/userinfo"><img style="max-height: 80%; vertical-align: middle" src="<?php echo $avatar?>" /></a>
         <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
 		<a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a>
     </div>

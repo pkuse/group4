@@ -5,9 +5,11 @@ class Page extends CI_Controller {
 	{
 		$userid = $this->session->userdata('userid');
 		$data['userid'] = $userid;
+		$flag = true;  // true表示是登录用户
 		if (!isset($userid)){
 			$data['userid'] = -1;
 			$data['username'] = 'null';
+			$flag = false;
 		}else{
 			$user = $this->User_model->get($userid);
 			$data['username'] = $user->Name;
@@ -20,6 +22,19 @@ class Page extends CI_Controller {
 			$owner = $this->User_model->get($v->OwnerID);
 			$vote['ownername'] = $owner->Name;
 			$vote['owneravatar'] = $owner->Avatar;
+			$vote['id'] = $v->ID;
+			$vote['status'] = $v->Status;
+			// 为登录，默认为-1
+			if ($flag == false) {
+				$vote['participate'] = -1;
+				$vote['follow'] = -1;
+			}
+			// 登录状态，1表示参与/关注过，0表示未参与/未关注
+			else {
+				$vote['participate'] = $this->User_model->is_participated($userid, $v->ID);
+				$vote['follow'] = $this->User_model->is_followed($userid, $v->ID);
+			}
+			
 			$rawoptions = $this->Vote_model->get_options($v->ID);
 			$vote['options'] = array();
 			foreach ($rawoptions as $raw) {
@@ -27,6 +42,7 @@ class Page extends CI_Controller {
 				$option['desc'] = $raw->DescInfo;
 				$option['path'] = $raw->Image;
 				$option['support'] = $raw->Support;
+				$option['id'] = $raw->ID;
 				array_push($vote['options'], $option);
 			}
 			$vote['title'] = $v->Title;
@@ -176,18 +192,36 @@ class Page extends CI_Controller {
 
 	public function submit_edit() {
 		$userid = $this->session->userdata('userid');
-		$data['userid'] = $userid;
 		if (!isset($userid)){
-			$data['userid'] = -1;
-			$data['username'] = 'null';
 			echo "您还未登陆";
 		}else{
 			$this->User_model->update_profile($userid);
-			$user = $this->User_model->get($userid);
-			$data['username'] = $user->Name;
-			$data['userdesc'] = $user->Info;
-			$data['avatar'] = $user->Avatar;
+			redirect('/page/userinfo');
 
+		}
+	}
+
+	public function submit_avatar() {
+		$userid = $this->session->userdata('userid');
+		if (!isset($userid)){
+			echo "您还未登陆";
+		}else{
+			$upload_config = array(
+				'upload_path' => './img/avatars/',
+				'allowed_types' => 'gif|jpg|jpeg|png',
+				'file_name' => 'avator'.$userid,
+				'max_size' => '1024'
+			);
+			$this->load->library('upload', $upload_config);
+			if (!$this->upload->do_upload("new_avatar")) {
+				echo "上传失败";
+				echo "<br/>";
+				echo $this->upload->display_errors();	
+			}
+			$file_name = $this->upload->data('file_name');
+			$path = substr($upload_config['upload_path'].$file_name, 1);
+			$this->User_model->update_avatar($userid, $path);
+			redirect('/page/editprofile');
 		}
 	}
 	public function followhistory() {
@@ -209,6 +243,10 @@ class Page extends CI_Controller {
 				$owner = $this->User_model->get($raw_v->OwnerID);
 				$vote['ownername'] = $owner->Name;
 				$vote['owneravatar'] = $owner->Avatar;
+				$vote['id'] = $raw_v->ID;
+				$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+				$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+				$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 				$raw_options = $this->Vote_model->get_options($raw_v->ID);
 				$vote['options'] = array();
 				foreach ($raw_options as $raw_p) {
@@ -216,6 +254,7 @@ class Page extends CI_Controller {
 					$option['desc'] = $raw_p->DescInfo;
 					$option['path'] = $raw_p->Image;
 					$option['support'] = $raw_p->Support;
+					$option['id'] = $raw_p->ID;
 					array_push($vote['options'], $option);
 				}
 				$vote['title'] = $raw_v->Title;
@@ -250,6 +289,10 @@ class Page extends CI_Controller {
 				$owner = $this->User_model->get($raw_v->OwnerID);
 				$vote['ownername'] = $owner->Name;
 				$vote['owneravatar'] = $owner->Avatar;
+				$vote['id'] = $raw_v->ID;
+				$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+				$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+				$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 				$record = $this->Vote_model->get_voted_record($userid, $raw_v->ID);
 				$vote['record']['option'] = $record->OptionID;
 				$vote['record']['comment'] = $record->Comment;
@@ -261,6 +304,7 @@ class Page extends CI_Controller {
 					$option['desc'] = $raw_p->DescInfo;
 					$option['path'] = $raw_p->Image;
 					$option['support'] = $raw_p->Support;
+					$option['id'] = $raw_p->ID;
 					array_push($vote['options'], $option);
 				}
 				$vote['title'] = $raw_v->Title;
@@ -295,6 +339,10 @@ class Page extends CI_Controller {
 				$owner = $this->User_model->get($raw_v->OwnerID);
 				$vote['ownername'] = $owner->Name;
 				$vote['owneravatar'] = $owner->Avatar;
+				$vote['id'] = $raw_v->ID;
+				$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+				$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+				$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 				$raw_options = $this->Vote_model->get_options($raw_v->ID);
 				$vote['options'] = array();
 				foreach ($raw_options as $raw_p) {
@@ -302,6 +350,7 @@ class Page extends CI_Controller {
 					$option['desc'] = $raw_p->DescInfo;
 					$option['path'] = $raw_p->Image;
 					$option['support'] = $raw_p->Support;
+					$option['id'] = $raw_p->ID;
 					array_push($vote['options'], $option);
 				}
 				$vote['title'] = $raw_v->Title;
