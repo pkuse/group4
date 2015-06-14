@@ -8,5 +8,3 @@ $('#myModal').on('show.bs.modal', function(event){
 	modal.find('#myModalLabel').val(title)
 	modal.find('#modalimg').setAttriute("src", imageurl)
 })
-
-alert(fuck)

@@ -1,52 +1,48 @@
 <script src="/js/vote.js"></script>
+<div class="index-banner">
+    <img src="/img/baymax.jpg" />
+</div>
  <div class="container">
-    <div class="row">
-    	<div class="col-md-12">
-			<img src="/img/baymax.jpg" alt="">
-		</div>
-	</div>
-	<hr />
 	<?php if(count($votes) != 0): ?>
 	<?php foreach($votes as $vote): ?>
-	<div class="row product">
-		<center><h3><?php echo $vote["title"] ?></h3></center>
-		<div class="col-md-3 col-md-offset-3 col-sm-3 col-sm-offset-3">
-			<img style="max-height:50px" src="/img/defaultavatar.png">
-			<span class="tagline">By: User</span>
-		</div>
-		<div class="col-md-2 col-sm-2">
-			<button type="button" class="btn btn-success btn-block">关注此投票</button>
-		</div>
-	</div>
-	<div class="row product">
-		<?php foreach($vote["options"] as $option ): ?>
-		<div class="col-md-6 col-sm-6">
-			<div class="product-item-vote">
-				<div class="product-thumb">
-					<img src=<?php echo substr($option["path"],1) ?> alt="">
-				</div>
-				<div class="product-content">
-					<h5><a href="#"><?php $option["title"] ?></a></h5>
-					<ul class="process-bars">
-						<li>
-							<div class="process">
-								<div class="process-bar" role="processbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="widt: 40%;" ></div>
-								<span>4<i class="fa fa-heart"></i></span>
-							</div>
-						</li>
-					</ul>
-					<p>选项描述</p>
-				</div>
-				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" value="vote" data-title="<?php echo $vote["title"] ?>" data-imgurl="<?php echo substr($option["path"],1) ?>">
-				投票
-				</button>
-			</div>
-		</div>
-		<?php endforeach; ?>
-	</div>
+    <figure class="index-vote">
+        <div class="row title-bar">
+            <div class="col-xs-10">
+                <h3><?php echo $vote["title"] ?></h3>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-star"></span> 关注此投票</button>
+            </div>
+        </div>
+        <div class="row author">
+            <div class="col-xs-12">
+                <img class="avatar" src="/img/defaultavatar.png" />
+                <span class="tagline">发起者：User</span>
+            </div>
+        </div>
+        <div class="row product">
+            <table>
+            <?php foreach($vote["options"] as $option ): ?>
+                <td>
+                    <div class="product-item-vote">
+                        <div class="vote-img" style="height: <?= 60 / count($vote["options"]) ?>vw; width: <?= 60 / count($vote["options"]) ?>vw; background-image: url('<?php echo substr($option["path"],1) ?>')"></div>
+                        <div class="product-content vote-meter">
+                            <span class="vote-meter-fill" style="width: 40%"></span>
+                            <h5><a href="#"><?php $option["title"] ?></a></h5>
+                            <p>选项描述</p>
+                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" value="vote" data-title="<?php echo $vote["title"] ?>" data-imgurl="<?php echo substr($option["path"],1) ?>">
+                                投票
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            <?php endforeach; ?>
+            </table>
+        </div>
+    </figure>
 	<?php endforeach; ?>
 	<?php endif; ?>
-	<div class="modal fade" id="myModal" tabindex="-1" rol="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myModal" tabindex="-1" rel="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

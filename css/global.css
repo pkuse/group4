@@ -9,11 +9,126 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
+ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+li {
+    list-style: none !important;
+}
+
 .container {
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
+.index-banner {
+    background-image: url('/images/bkg.jpg');
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: bottom;
+    height: 60vw;
+    max-height: 70vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.index-banner:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    bottom: 0;
+    background-image: linear-gradient(to bottom, white, transparent);
+}
+
+    .index-banner img {
+        max-width: 90%;
+        max-height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+.inline-search {
+    min-height: 0;
+    height: auto;
+}
+
+.inline-search input {
+    line-height: normal !important;
+    height: auto;
+    width: auto;
+}
+
+.inline-search button {
+    height: 100%;
+}
+
 a:hover {
     text-decoration: none;
+}
+
+figure.index-vote {
+    border-radius: 1em;
+    margin: 1em;
+    border: 1px solid #eee;
+    background-color: #f0f0f0;
+    padding: 1em 2em;
+}
+
+figure.index-vote .vote-img {
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+figure.index-vote img.avatar {
+    border-radius: 50%;
+    height: 3em;
+    width: 3em;
+}
+
+figure.index-vote .product-item-vote {
+    overflow: hidden;
+    border-radius: 1em;
+    margin: 2em;
+    padding: 0;
+    background-color: #f8f8f8;
+    box-shadow: #ddd 0 0 10px;
+}
+
+figure.index-vote table {
+    width: 100%;
+}
+
+figure.index-vote table td {
+    text-align: center;
+}
+
+figure.index-vote .author {
+    font-size: 0.8em;
+    color: gray;
+}
+
+figure.index-vote .vote-meter {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+figure.index-vote .vote-meter .vote-meter-fill {
+    background-image: linear-gradient(to bottom, transparent, lightblue);
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
 }
