@@ -48,16 +48,16 @@
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
 				</div>
-				<div class="caption" style="height:200px">
-					<h3><a href="#"><?php echo $vote["title"] ?></a></h3>
-					<p>描述：<?php echo $vote["desc"] ?></p>
+				<div class="caption">
+					<h3><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
+					<p class="desc">描述：<?php echo $vote["desc"] ?></p>
 					<p style="font-size:80%">
 						<span class="glyphicon glyphicon-user"></span>
-						125&nbsp
+						<?php echo $vote['part_num'] ?>&nbsp
 						<span class="glyphicon glyphicon-comment"></span>
-						36&nbsp
+						<?php echo $vote['comment_num'] ?>&nbsp
 						<span class="glyphicon glyphicon-star"></span>
-						57&nbsp
+						<?php echo $vote['follow_num'] ?>&nbsp
                     </p>
 					<p style="color:#3366CC; font-size:80%">我投给了选项<?php echo $vote['record']['option'] ?></p>
 					<?php if ($vote['record']['comment'] != NULL): ?>

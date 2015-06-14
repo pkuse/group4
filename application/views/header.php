@@ -94,7 +94,7 @@
             <li>
                 <a class="dropdown-toggle" href="javascript:;"><img style="max-height: 80%; vertical-align: middle" src="<?php echo isset($avatar) ? $avatar : "/images/defaultavatar.png" ?>" /> <?php echo $username ?></a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li><a href="/">我的首页</a></li>
+                    <li><a href="/index.php/page/userinfo">我的首页</a></li>
                     <li><a href="/index.php/page/logout">退出登录</a></li>
                 </ul>
             </li>

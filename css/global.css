@@ -84,10 +84,11 @@ figure.index-vote {
     padding: 1em 2em;
 }
 
-figure.index-vote .vote-img {
+.vote-img {
     background-size: cover;
     background-position-x: center;
     background-position-y: center;
+    max-height: 50vh;
 }
 
 figure.index-vote img.avatar {
@@ -96,21 +97,26 @@ figure.index-vote img.avatar {
     width: 3em;
 }
 
-figure.index-vote .product-item-vote {
+.product-item-vote {
+    display: block;
     overflow: hidden;
     border-radius: 1em;
-    margin: 2em;
+    margin: 1em;
     padding: 0;
     background-color: #f8f8f8;
     box-shadow: #ddd 0 0 10px;
-}
-
-figure.index-vote table {
-    width: 100%;
-}
-
-figure.index-vote table td {
     text-align: center;
+}
+
+.product-item-vote .like-count {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: purple;
+    padding: 0.5em 1em;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    border-bottom-right-radius: 1em;
 }
 
 figure.index-vote .author {
@@ -118,17 +124,41 @@ figure.index-vote .author {
     color: gray;
 }
 
-figure.index-vote .vote-meter {
+.vote-meter {
     position: relative;
     margin: 0;
-    padding: 0;
+    padding: 0.5em;
 }
 
-figure.index-vote .vote-meter .vote-meter-fill {
-    background-image: linear-gradient(to bottom, transparent, lightblue);
+.vote-meter .vote-meter-fill {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-color: lightblue;
+    background-size: 40px 40px;
+    background-repeat: repeat;
     position: absolute;
     display: block;
     top: 0;
     bottom: 0;
     left: 0;
+}
+
+.vote-meter .vote-meter-fill:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    bottom: 0;
+    background-image: linear-gradient(to bottom, white, transparent);
+}
+
+.desc {
+    max-width: 80%;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

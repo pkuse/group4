@@ -6,7 +6,7 @@
     <div class="col-md-5">
         
         <h4 style="margin-top:1em">修改头像</h4>
-        <?php echo form_open_multipart('page/haha') ?>
+        <?php echo form_open_multipart('page/submit_avatar') ?>
         <a href="#"  class="thumbnail">
             <label for="pic1" class="sr-only">修改头像</label>
             <input type="file" name="new_avatar" onchange="javascript:setImagePreview(this,localImag1,preview1);" value="修改头像" required>
@@ -25,13 +25,12 @@
         <input type="email" autocomplete="on" name="user_email" value="<?php echo $useremail ?>"/>
         <p style="margin-top:1em">签名</p>
         <textarea rows="5" cols="60" name="user_desc" placeholder="签名："><?php echo $userdesc ?></textarea>
-        <h2>其他信息</h2>
         <p style="margin-top:1em">生日</p>
         <input type="date" name="user_birthday"/>
         <p style="margin-top:1em">地址</p>
         <input type="text" name="location"/>
         <p></p>
-        <input type="submit" value="保存修改"/>
+        <input type="submit" value="保存资料"/>
         <?php echo form_close() ?>
     </div>
 </div>
