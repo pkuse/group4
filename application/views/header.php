@@ -34,10 +34,11 @@
         <div class="app-bar" data-role="appbar">
             <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
             <span class="app-bar-divider"></span>
-            <form class="app-bar-element">
+
+            <form  class="app-bar-element"  action="/index.php/page/search/">
                 <div class="text input-control inline-search">
                     <input style="color: black" type="search" name="search" placeholder="搜！" />
-                    <button class="button"><span class="mif-search"></span></button>
+                    <button class="button" type="submit"><span class="mif-search"></span></button>
                 </div>
             </form>
             <a class="app-bar-element place-right fg-white" href="/index.php/signup">注册</a>
@@ -84,7 +85,7 @@
     <div class="app-bar" data-role="appbar">
         <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
         <span class="app-bar-divider"></span>
-        <form class="app-bar-element">
+        <form class="app-bar-element" action="/index.php/page/search/">
             <div class="text input-control inline-search">
                 <input type="search" name="search" placeholder="搜！" />
                 <button class="button"><span class="mif-search"></span></button>
@@ -94,7 +95,7 @@
             <li>
                 <a class="dropdown-toggle" href="javascript:;"><img style="max-height: 80%; vertical-align: middle" src="<?php echo isset($avatar) ? $avatar : "/images/defaultavatar.png" ?>" /> <?php echo $username ?></a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li><a href="/index.php/page/userinfo">我的首页</a></li>
+                    <li><a href="/index.php/page/usercenter">我的首页</a></li>
                     <li><a href="/index.php/page/logout">退出登录</a></li>
                 </ul>
             </li>

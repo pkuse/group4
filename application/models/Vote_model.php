@@ -106,13 +106,21 @@ class Vote_model extends CI_Model {
 			return -1;
 		}
 		else {
-			echo $vote_id;
-			echo "<br />";
-			echo $query->row()->Status;
-			// $vote['Status'] = 0;
-			// $this->db->update("VOTE_INFO", $vote, array("ID" => $vote_id));
+			$v = $query->row();
+			if ($v->Status == 0) {
+				echo "已关闭";
+				return -1;
+			}
+
+			$vote['Status'] = 0;
+			$this->db->update("VOTE_INFO", $vote, array("ID" => $vote_id));
 			return 0;
 		}
+	}
+
+	public function get_search($sql) {
+		$query = $this->db->query($sql);
+		return $query->result();
 	}
 }
 

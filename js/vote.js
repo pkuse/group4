@@ -10,6 +10,7 @@ $('#myModal').on('show.bs.modal', function(event){
 	$('#modalimg').attr("src", imgurl);
 	$('#modalvoteid').attr('value', voteid);
 	$('#modaloptionid').attr('value', optionid);
+	$('#modalsrcurl').attr('value', "/vote/view/"+voteid);
 });
 
 $(".vote-img").each(function () {

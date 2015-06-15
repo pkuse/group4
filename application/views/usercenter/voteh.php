@@ -2,7 +2,7 @@
 	<div class="container">
 		<h2>参与的投票</h2>
 		<hr/>
-		<a class="hidden-lg hidden-md" href="/index.php/page/phonecenter"><p>返回主页</p></a>
+		<a class="hidden-lg hidden-md" href="/index.php/page/usercenter"><p>返回主页</p></a>
 <div class="row">
 	<?php $i = 0 ?>
 	<?php foreach ($votes as $vote): ?>
@@ -49,7 +49,7 @@
 					</a>
 				</div>
 				<div class="caption">
-					<h3><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
+					<h3 class="desc"><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
 					<p class="desc">描述：<?php echo $vote["desc"] ?></p>
 					<p style="font-size:80%">
 						<span class="glyphicon glyphicon-user"></span>
@@ -61,7 +61,9 @@
                     </p>
 					<p style="color:#3366CC; font-size:80%">我投给了选项<?php echo $vote['record']['option'] ?></p>
 					<?php if ($vote['record']['comment'] != NULL): ?>
-					<p style="color:#3366CC; font-size:80%">我的评论：<?php echo $vote['record']['comment'] ?></p>
+					<p class="desc" style="color:#3366CC; font-size:80%">我的评论：<?php echo $vote['record']['comment'] ?></p>
+					<?php else: ?>
+					<p class="desc" style="color:#3366CC; font-size:80%">未评论</p>
 					<?php endif ?>
 				</div>
 			</div>

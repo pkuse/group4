@@ -111,7 +111,7 @@ class Vote extends CI_Controller {
 		$owner = $this->User_model->get($vote['ownerid']);
 		$vote['ownername'] = $owner->Name;
 		$vote['owneravatar'] = $owner->Avatar;
-		
+		$vote['status'] = $rawvote->Status;
 		#set options info
 		$options = array();
 		$rawoptions = $this->Vote_model->get_options($id);
@@ -157,12 +157,13 @@ class Vote extends CI_Controller {
 			$voteid = $this->input->post("voteid");
 			$optionid = $this->input->post("optionid");
 			$comment = $this->input->post("comment");
+			$srcurl = $this->input->post("srcurl");
 			$v = $this->User_model->vote($userid, $voteid, $optionid, $comment);
 			if ($v == -1) {
 				echo "投票失败";
 			}
 			else {
-				redirect('/');
+				redirect($srcurl);
 			}
 			
 		}		
@@ -190,8 +191,9 @@ class Vote extends CI_Controller {
 			echo "您还未登录";
 		} else {
 			$voteid = $this->input->post("voteid");
+			$srcurl = $this->input->post("srcurl");
 			$this->User_model->follow_vote($userid, $voteid);
-			redirect('/');
+			redirect($srcurl);
 		}
 	}
 
@@ -201,9 +203,11 @@ class Vote extends CI_Controller {
 			echo "您还未登录";
 		} else {
 			$voteid = $this->input->post("voteid");
-			$this->Vote_model->close($userid, $voteid);
-			
-			//redirect('/');
+			if ($this->Vote_model->close($userid, $voteid) == -1) {
+				echo "关闭失败";
+			}
+			else
+				redirect('/page/publishhistory');
 		}
 	}
 }
