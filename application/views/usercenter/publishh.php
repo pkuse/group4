@@ -60,7 +60,11 @@
 							<span class="glyphicon glyphicon-star"></span>
 							<?php echo $vote['follow_num'] ?>&nbsp
 						</p>
-						<a role="button" class="btn btn-link" data-toggle="modal" data-target="#myModal" data-voteid=<?php echo $vote['id'] ?>>关闭投票</a>
+						<?php if($vote['status'] == 0): ?>
+							<p>已关闭</p>
+						<?php else: ?>
+							<button role="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-voteid=<?php echo $vote['id'] ?>>关闭投票</button>
+						<?php endif ?>
 					</p>
 				</div>
 			</div>

@@ -9,6 +9,7 @@
         <div class="col-md-3 col-sm-3">
         <?php echo form_open("/vote/follow") ?>
                 <input type="text" name="voteid" value="<?php echo $vote['id'] ?>" style="display: none">
+                <input type="text" name="srcurl" value="/vote/view/<?php echo $vote['id'] ?>" style="display: none">
         <button type="button submit" class="btn btn-success btn-block"
         <?php 
             if ($userid == -1)
@@ -82,6 +83,7 @@
                     </div>
                     <input id="modalvoteid" type="text" name="voteid" value="" style="display: none">
                     <input id="modaloptionid" type="text" name="optionid" value="" style="display: none">
+                    <input id="modalsrcurl" type="text" name="srcurl" value="" style="display: none">
                     <textarea class="form-control" rows="3" placeholder="亲，点评一下吧~" name="comment"></textarea>
                 </div>
                 <div class="modal-footer">

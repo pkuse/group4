@@ -58,7 +58,10 @@
 						<span class="glyphicon glyphicon-star"></span>
 						<?php echo $vote['follow_num'] ?>&nbsp
                     </p>
-                    <a href="/index.php/vote/follow">取消关注</a>
+                    <?php echo form_open("/vote/follow") ?>
+                    <input type="text" name="voteid" value=<?php echo $vote['id']?> style="display: none">
+                    <button type="button submit" class="btn btn-primary" name="submit">取消关注</button>
+                    <?php echo form_close() ?>
 				</div>
 			</div>
 		</div>
