@@ -54,15 +54,15 @@
 			<div id="icon3" class="form-group col-md-6" style="display:none">
 				<div class="form-group">
 					<label for="subtitle3">投票的选项3</label>
-					<input type="text" class="form-control" name="vote_options_title[]" id="title" placeholder="第三个选项是什么呢" required>
+					<input type="text" class="form-control" name="vote_options_title[]" id="title" placeholder="第三个选项是什么呢" required disabled>
 				</div>
 				<div class="form-group">
 					<label for="description3">投票的描述</label>
-					<textarea class="form-control" rows="2" name="vote_options_desc[]" id="description3" placeholder="描述一下这个选项吧"></textarea>
+					<textarea class="form-control" rows="2" name="vote_options_desc[]" id="description3" placeholder="描述一下这个选项吧" disabled></textarea>
 				</div>
 				<a href="#icon3" class="thumbnail">
 					<label for="pic3"class="sr-only">上传选项3的图片</label>
-					<input type="file" name="vote_options_pic_2" id="pic3" onchange="javascript:setImagePreview(this,localImag3,preview3);" required>
+					<input type="file" name="vote_options_pic_2" id="pic3" onchange="javascript:setImagePreview(this,localImag3,preview3);" required disabled>
 					<p class="help-block">上传并预览图片</p>
 					<div id="localImag3" >  
 						<img id="preview3" class="img-thumbnail"alt="" />  
@@ -74,15 +74,15 @@
 			<div id="icon4" class="form-group col-md-6" style="display:none">
 				<div class="form-group">
 					<label for="subtitle4">投票的选项4</label>
-					<input type="text" class="form-control" id="title" name="vote_options_title[]" placeholder="第四个选项是什么呢" required>
+					<input type="text" class="form-control" id="title" name="vote_options_title[]" placeholder="第四个选项是什么呢" required disabled>
 				</div>
 				<div class="form-group">
 					<label for="description4">投票的描述</label>
-					<textarea class="form-control" rows="2" name="vote_options_desc[]" id="description4" placeholder="描述一下这个选项吧"></textarea>
+					<textarea class="form-control" rows="2" name="vote_options_desc[]" id="description4" placeholder="描述一下这个选项吧" disabled></textarea>
 				</div>
 				<a href="#icon4" class="thumbnail">
 					<label for="pic4" class="sr-only">上传选项4的图片</label>
-					<input type="file" name="vote_options_pic_3" id="pic4" onchange="javascript:setImagePreview(this,localImag4,preview4);" required>
+					<input type="file" name="vote_options_pic_3" id="pic4" onchange="javascript:setImagePreview(this,localImag4,preview4);" required disabled>
 					<p class="help-block">上传并预览图片</p>
 					<div id="localImag4" >  
 						<img id="preview4" class="img-thumbnail"alt="" />  
@@ -98,28 +98,28 @@
 	<?php echo form_close() ?>
 </div>
 <script type="text/javascript">
+    $.fn.toggleDisabled = function () {
+        return this.each(function () {
+            this.disabled = !this.disabled;
+        });
+    };
+
 	$(document).ready(function(){
 		$("#no3").click(function(){
-			$("#icon3").toggle(400);
+			$("#icon3").toggle(400).find("[name]").toggleDisabled();
 			$("#more3").toggle();
 		});
-	});
-	$(document).ready(function(){
 		$("#no4").click(function(){
-			$("#icon4").toggle(400);
+			$("#icon4").toggle(400).find("[name]").toggleDisabled();
 			$("#more4").toggle();
 			$("#no3").toggle();
 		});
-	});
-	$(document).ready(function(){
 		$("#more3").click(function(){
-			$("#icon3").toggle(400);
+			$("#icon3").toggle(400).find("[name]").toggleDisabled();
 			$("#more3").toggle();
 		});
-	});
-	$(document).ready(function(){
 		$("#more4").click(function(){
-			$("#icon4").toggle(400);
+			$("#icon4").toggle(400).find("[name]").toggleDisabled();
 			$("#more4").toggle();
 			$("#no3").toggle();
 		});

@@ -2,7 +2,7 @@
     <center><h3><?php echo $vote['title'] ?></h3></center>
     <div class="row product" style="margin-top:10px; margin-bottom:10px">
         <div class="col-md-3 col-md-offset-3 col-sm-3 col-sm-offset-3">
-            <img class="img-circle" style="max-height:50px" src="<?php echo $vote['owneravatar'] ?>"/>
+            <img class="img-circle" style="height: 3em; width: 3em" src="<?php echo $vote['owneravatar'] ?>"/>
             <span class="tagline">By: <?php echo $vote['ownername'] ?></span>
         </div>	
 
