@@ -36,7 +36,7 @@
             <span class="app-bar-divider"></span>
             <form class="app-bar-element">
                 <div class="text input-control inline-search">
-                    <input type="search" name="search" placeholder="搜！" />
+                    <input style="color: black" type="search" name="search" placeholder="搜！" />
                     <button class="button"><span class="mif-search"></span></button>
                 </div>
             </form>
