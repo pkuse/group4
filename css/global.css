@@ -9,11 +9,156 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
+ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+li {
+    list-style: none !important;
+}
+
 .container {
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
+.index-banner {
+    background-image: url('/images/bkg.jpg');
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: bottom;
+    height: 60vw;
+    max-height: 70vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.index-banner:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    bottom: 0;
+    background-image: linear-gradient(to bottom, white, transparent);
+}
+
+    .index-banner img {
+        max-width: 90%;
+        max-height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+.inline-search {
+    min-height: 0;
+    height: auto;
+}
+
+.inline-search input {
+    line-height: normal !important;
+    height: auto;
+    width: auto;
+}
+
+.inline-search button {
+    height: 100%;
+}
+
 a:hover {
     text-decoration: none;
+}
+
+figure.index-vote {
+    border-radius: 1em;
+    margin: 1em;
+    border: 1px solid #eee;
+    background-color: #f0f0f0;
+    padding: 1em 2em;
+}
+
+.vote-img {
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    max-height: 50vh;
+}
+
+figure.index-vote img.avatar {
+    border-radius: 50%;
+    height: 3em;
+    width: 3em;
+}
+
+.product-item-vote {
+    display: block;
+    overflow: hidden;
+    border-radius: 1em;
+    margin: 1em;
+    padding: 0;
+    background-color: #f8f8f8;
+    box-shadow: #ddd 0 0 10px;
+    text-align: center;
+}
+
+.product-item-vote .like-count {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: purple;
+    padding: 0.5em 1em;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    border-bottom-right-radius: 1em;
+}
+
+figure.index-vote .author {
+    font-size: 0.8em;
+    color: gray;
+}
+
+.vote-meter {
+    position: relative;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.vote-meter .vote-meter-fill {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-color: lightblue;
+    background-size: 40px 40px;
+    background-repeat: repeat;
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.vote-meter .vote-meter-fill:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    bottom: 0;
+    background-image: linear-gradient(to bottom, white, transparent);
+}
+
+.desc {
+    max-width: 80%;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

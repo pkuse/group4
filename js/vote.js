@@ -12,3 +12,7 @@ $('#myModal').on('show.bs.modal', function(event){
 	$('#modaloptionid').attr('value', optionid);
 	$('#modalsrcurl').attr('value', "/vote/view/"+voteid);
 });
+
+$(".vote-img").each(function () {
+    $(this).css('height', $(this).width());
+});

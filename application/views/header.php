@@ -34,6 +34,12 @@
         <div class="app-bar" data-role="appbar">
             <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
             <span class="app-bar-divider"></span>
+            <form class="app-bar-element">
+                <div class="text input-control inline-search">
+                    <input type="search" name="search" placeholder="搜！" />
+                    <button class="button"><span class="mif-search"></span></button>
+                </div>
+            </form>
             <a class="app-bar-element place-right fg-white" href="/index.php/signup">注册</a>
             <div class="app-bar-element place-right">
                 <a class="dropdown-toggle fg-white"><span class="mif-enter"></span> 登录</a>
@@ -76,10 +82,23 @@
     </div>
     <?php else: ?>
     <div class="app-bar" data-role="appbar">
-        <a class="app-bar-element" href="/">选呗</a>
+        <a class="app-bar-element" href="/"><span class="mif-home"></span> 选呗</a>
         <span class="app-bar-divider"></span>
-        <a class="app-bar-element place-right" href="/index.php/page/userinfo"><img style="max-height: 80%; vertical-align: middle" src="<?php echo $avatar?>" /></a>
-        <a class="app-bar-element place-right fg-white" href="/index.php/page/logout"><?php echo $username ?></a>
-		<a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a>
+        <form class="app-bar-element">
+            <div class="text input-control inline-search">
+                <input type="search" name="search" placeholder="搜！" />
+                <button class="button"><span class="mif-search"></span></button>
+            </div>
+        </form>
+        <ul class="app-bar-menu place-right fg-white">
+            <li>
+                <a class="dropdown-toggle" href="javascript:;"><img style="max-height: 80%; vertical-align: middle" src="<?php echo isset($avatar) ? $avatar : "/images/defaultavatar.png" ?>" /> <?php echo $username ?></a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="/index.php/page/userinfo">我的首页</a></li>
+                    <li><a href="/index.php/page/logout">退出登录</a></li>
+                </ul>
+            </li>
+            <li><a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a></li>
+        </ul>
     </div>
     <?php endif; ?>
