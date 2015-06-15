@@ -117,6 +117,11 @@ class Vote_model extends CI_Model {
 			return 0;
 		}
 	}
+
+	public function get_search($sql) {
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 }
 
 

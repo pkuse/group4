@@ -25,7 +25,7 @@
         <?php echo form_close() ?>
     </div>
     <div class="author">
-        <img class="avatar" src="/img/defaultavatar.png" />
+        <img class="avatar" src="<?php echo $vote["owneravatar"] ?>" />
         <span class="tagline">发起者：<?php echo $vote["ownername"] ?></span>
     </div>
     <div class="row product">

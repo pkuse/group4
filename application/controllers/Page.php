@@ -57,7 +57,7 @@ class Page extends CI_Controller {
 	}
 	public function login(){
 		$userid = $this->User_model->authen();
-
+		// //echo "DENGNNG";
 		if ($userid > 0){
 			$data['userid'] = $userid;
 			$sessiondata = array('userid' => $userid);
@@ -69,7 +69,7 @@ class Page extends CI_Controller {
 	public function signup(){
 		$userid = $this->session->userdata('userid');
 		$data['userid'] = $userid;
-		if (!isset($status)){
+		if (!isset($userid)){
 			$data['userid'] = -1;
 			$data['username'] = 'null';
 		}else{
@@ -132,7 +132,7 @@ class Page extends CI_Controller {
 		redirect('/');
 	}
 
-	public function phonecenter() {
+	public function usercenter() {
 		$userid = $this->session->userdata('userid');
 		$data['userid'] = $userid;
 		if (!isset($userid)){
@@ -143,9 +143,10 @@ class Page extends CI_Controller {
 			$user = $this->User_model->get($userid);
 			$data['username'] = $user->Name;
 			$data['userdesc'] = $user->Info;
+			$data['useremail'] = $user->Email;
 			$data['avatar'] = $user->Avatar;
 			$this->load->view('header', $data);
-			$this->load->view('usercenter/phonecenter');
+			$this->load->view('usercenter/usercenter');
 			$this->load->view('footer');
 		}
 	}
@@ -365,4 +366,77 @@ class Page extends CI_Controller {
 			$this->load->view('footer');
 		}
 	}
+
+	public function search() {
+		$str = $this->input->get("search");
+		if (empty($str)) 
+			redirect('/');
+		else {
+			$userid = $this->session->userdata('userid');
+			$data['userid'] = $userid;
+			$flag = true;  // true表示是登录用户
+			if (!isset($userid)){
+				$data['userid'] = -1;
+				$data['username'] = 'null';
+				$flag = false;
+			}else{
+				$user = $this->User_model->get($userid);
+				$data['username'] = $user->Name;
+				$data['avatar'] = $user->Avatar;
+			}
+
+			$keywords = explode(" ", $str);
+			$len = count($keywords);
+			if ($len >= 1) {
+				$sql = "SELECT * FROM VOTE_INFO WHERE (Title LIKE '%$keywords[0]%' OR DescInfo LIKE '%$keywords[0]%')";
+				for ($i = 1; $i < $len; $i++) {
+					$sql = $sql."AND (Title LIKE '%$keywords[$i]%' OR DescInfo LIKE '%$keywords[$i]%')";
+				}
+				$sql = $sql." ORDER BY CreateTime DESC";
+				$rawvotes = $this->Vote_model->get_search($sql);
+				$data['votes'] = array();
+				foreach ($rawvotes as $v) {
+					$vote = array();
+					$owner = $this->User_model->get($v->OwnerID);
+					$vote['ownername'] = $owner->Name;
+					$vote['owneravatar'] = $owner->Avatar;
+					$vote['id'] = $v->ID;
+					$vote['status'] = $v->Status;
+					// 为登录，默认为-1
+					if ($flag == false) {
+						$vote['participate'] = -1;
+						$vote['follow'] = -1;
+					}
+					// 登录状态，1表示参与/关注过，0表示未参与/未关注
+					else {
+						$vote['participate'] = $this->User_model->is_participated($userid, $v->ID);
+						$vote['follow'] = $this->User_model->is_followed($userid, $v->ID);
+					}
+
+					$rawoptions = $this->Vote_model->get_options($v->ID);
+					$vote['options'] = array();
+					foreach ($rawoptions as $raw) {
+						$option['title'] = $raw->Title;
+						$option['desc'] = $raw->DescInfo;
+						$option['path'] = $raw->Image;
+						$option['support'] = $raw->Support;
+						$option['id'] = $raw->ID;
+						array_push($vote['options'], $option);
+					}
+					$vote['title'] = $v->Title;
+					$vote['desc'] = $v->DescInfo;
+					$vote['createtime'] = $v->CreateTime;
+					array_push($data['votes'], $vote);
+				}
+
+				$this->load->view('header', $data);
+				$this->load->view('home');
+				$this->load->view('footer');
+			}
+			else 
+				redirect('/');
+		}
+		
+
+	} 
 }

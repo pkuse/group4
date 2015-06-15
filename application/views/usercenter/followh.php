@@ -2,7 +2,7 @@
 	<div class="container">
 		<h2>关注的投票</h2>
 		<hr/>
-		<a class="hidden-lg hidden-md" href="/index.php/page/phonecenter"><p>返回主页</p></a>
+		<a class="hidden-lg hidden-md" href="/index.php/page/usercenter"><p>返回主页</p></a>
 	<?php $i = 0 ?>
 	<?php foreach ($votes as $vote): ?>
 		<?php $i++ ?>
@@ -60,6 +60,7 @@
                     </p>
                     <?php echo form_open("/vote/follow") ?>
                     <input type="text" name="voteid" value=<?php echo $vote['id']?> style="display: none">
+                    <input type="text" name="srcurl" value="/page/followhistory" style="display: none">
                     <button type="button submit" class="btn btn-primary" name="submit">取消关注</button>
                     <?php echo form_close() ?>
 				</div>

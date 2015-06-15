@@ -2,7 +2,7 @@
 	<div class="container">
 		<h2>个人信息</h2>
 		<hr/>
-		<a class="hidden-lg hidden-md" href="/index.php/page/phonecenter"><p>返回主页</p></a>
+		<a class="hidden-lg hidden-md" href="/index.php/page/usercenter"><p>返回主页</p></a>
 		<table id="baseInf">
 			<tr>
 				<p style="margin-top:1em">帐号: <?php echo $username ?></p>

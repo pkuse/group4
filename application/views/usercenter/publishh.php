@@ -2,7 +2,7 @@
 	<div class="container">
 		<h2>发起的投票</h2>
 		<hr/>
-		<a class="hidden-lg hidden-md" href="/index.php/page/phonecenter"><p>返回主页</p></a>
+		<a class="hidden-lg hidden-md" href="/index.php/page/usercenter"><p>返回主页</p></a>
 <div class="row">
 	<?php $i = 0 ?>
 	<?php foreach ($votes as $vote): ?>
@@ -80,7 +80,8 @@
 				<div class="modal-body"> 确认关闭此投票？</div>
 				<div class="modal-footer">
 					<?php echo form_open("/vote/close_vote") ?>
-					<input id="modalvoteid" type="text" name="voteid" value="<?php echo $vote['id'] ?>" style="display: none">
+					<input id="modalvoteid" type="text" name="voteid" value="" style="display: none">
+					<input type="text" name="srcurl" value="/page/publishhistory" style="display: none">
 					<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
 					<button type="button submit" class="btn btn-promary">是</button>
 					<?php echo form_close() ?>
