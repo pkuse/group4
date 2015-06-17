@@ -168,3 +168,13 @@ figure.index-vote .author {
     white-space: nowrap;
     overflow: hidden;
 }
+
+.vote.desc {
+    margin: 1.5em 1em 0.5em;
+    padding: 0.5em;
+    font-size: 0.9em;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    max-width: 100%;
+}

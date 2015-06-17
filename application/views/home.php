@@ -31,13 +31,16 @@
                 <div style="float:right">
                     <p style="font-size:80%">
                         <span class="glyphicon glyphicon-user"></span>
-                        <?php echo $vote['part_num'] ?>&nbsp&nbsp
+                        <?php echo $vote['part_num'] ?>&nbsp;&nbsp;
                         <span class="glyphicon glyphicon-comment"></span>
-                        <?php echo $vote['comment_num'] ?>&nbsp&nbsp
+                        <?php echo $vote['comment_num'] ?>&nbsp;&nbsp;
                         <span class="glyphicon glyphicon-star"></span>
-                        <?php echo $vote['follow_num'] ?>&nbsp&nbsp
+                        <?php echo $vote['follow_num'] ?>&nbsp;&nbsp;
                     </p>
                 </div>
+            </div>
+            <div class="vote desc">
+                <b>投票描述：</b><?= $vote['desc'] ?>
             </div>
             <div class="row product">
                 <?php foreach($vote["options"] as $option ): ?>
