@@ -92,9 +92,9 @@ class Vote extends CI_Controller {
 		#set vote info
 		$vote = array();
 		$vote['id'] = $id;
-		$rawvote = $this->Vote_model->get($id);
-		$vote['title'] = 'default vote title';
-		$vote['desc'] = $rawvote->DescInfo;
+		$rowvote = $this->Vote_model->get($id);
+		$vote['title'] = $rowvote->Title;
+		$vote['desc'] = $rowvote->DescInfo;
 		// 为登录，默认为-1
 		if ($flag == false) {
 			$vote['participate'] = -1;
@@ -106,37 +106,40 @@ class Vote extends CI_Controller {
 			$vote['follow'] = $this->User_model->is_followed($userid, $id);
 		}
 		#set owner info 
-		$vote['ownerid'] = $rawvote->OwnerID;
+		$vote['ownerid'] = $rowvote->OwnerID;
 		#echo "userid: " + $vote['ownerid'] + "<br />";
 		$owner = $this->User_model->get($vote['ownerid']);
 		$vote['ownername'] = $owner->Name;
 		$vote['owneravatar'] = $owner->Avatar;
-		$vote['status'] = $rawvote->Status;
+		$vote['status'] = $rowvote->Status;
+		$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+		$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+		$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 		#set options info
 		$options = array();
-		$rawoptions = $this->Vote_model->get_options($id);
+		$rowoptions = $this->Vote_model->get_options($id);
 		$vote['participant'] = 0; #total number of the vote participants
-		foreach($rawoptions as $rawoption){
+		foreach($rowoptions as $rowoption){
 			$option = array();
-			$option['id'] = $rawoption->ID;
-			$option['title'] = 'default option title';
-			$option['path'] = $rawoption->Image;
-			$option['desc'] = $rawoption->DescInfo;
-			$option['support'] = $rawoption->Support;
+			$option['id'] = $rowoption->ID;
+			$option['title'] = $rowoption->Title;
+			$option['path'] = $rowoption->Image;
+			$option['desc'] = $rowoption->DescInfo;
+			$option['support'] = $rowoption->Support;
 			$vote['participant'] += $option['support'];
 			array_push($options, $option);
 		}
 
 		#set comments
-		$rawrecords = $this->Vote_model->get_comments($id);
+		$rowrecords = $this->Vote_model->get_comments($id);
 		$comments = array();
-		//echo count($rawrecords);
-		foreach ($rawrecords as $rawrecord) {
+		//echo count($rowrecords);
+		foreach ($rowrecords as $rowrecord) {
 			$comment = array();
-			$owner = $this->User_model->get($rawrecord->UserID);
+			$owner = $this->User_model->get($rowrecord->UserID);
 			$comment['ownername'] = $owner->Name;
 			$comment['owneravatar'] = $owner->Avatar;
-			$comment['content'] = $rawrecord->Comment;
+			$comment['content'] = $rowrecord->Comment;
 			array_push($comments, $comment);
 		}
 		$vote['options'] = $options;

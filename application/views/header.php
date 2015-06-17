@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>选呗 - [页面]</title>
+    <title>选呗</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/metro.css" rel="stylesheet" />
@@ -21,7 +21,12 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/metro.min.js"></script>
 	<script src="/js/imgpreview.js"></script>
-    <style>
+    <script>
+		$(document).ready(function () {
+			$("nav.hidden").removeClass("hidden"); // Hack
+		});
+	</script>
+	<style>
     .carousel-inner{
       width: 250px;
       height: 160px;
@@ -87,7 +92,7 @@
         <span class="app-bar-divider"></span>
         <form class="app-bar-element" action="/index.php/page/search/">
             <div class="text input-control inline-search">
-                <input type="search" name="search" placeholder="搜！" />
+                <input style="color: black" type="search" name="search" placeholder="搜！" />
                 <button class="button"><span class="mif-search"></span></button>
             </div>
         </form>

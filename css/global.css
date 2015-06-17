@@ -1,7 +1,12 @@
 ﻿body {
     font-family: 'Microsoft YaHei' SimHei 'Segoe UI' Arial !important;
     margin: 0;
-    padding: 0;
+    padding: 0 0 3em 0;
+	position: relative;
+}
+
+body > div.container {
+	min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {

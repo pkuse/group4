@@ -24,6 +24,9 @@ class Page extends CI_Controller {
 			$vote['owneravatar'] = $owner->Avatar;
 			$vote['id'] = $v->ID;
 			$vote['status'] = $v->Status;
+			$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+			$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+			$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 			// 为登录，默认为-1
 			if ($flag == false) {
 				$vote['participate'] = -1;
@@ -63,8 +66,14 @@ class Page extends CI_Controller {
 			$sessiondata = array('userid' => $userid);
 			$this->session->set_userdata($sessiondata);
 			echo 'login success';
+
 		}
 		redirect('/');
+		// if ($userid == 1) {
+		// 	redirect("/admin/user");
+		// }
+		// else
+		// 	redirect('/');
 	}
 	public function signup(){
 		$userid = $this->session->userdata('userid');
@@ -369,6 +378,8 @@ class Page extends CI_Controller {
 
 	public function search() {
 		$str = $this->input->get("search");
+		$search_key = str_replace(" ", "+", $str);
+		$data['keywords'] = $search_key;
 		if (empty($str)) 
 			redirect('/');
 		else {
@@ -388,9 +399,10 @@ class Page extends CI_Controller {
 			$keywords = explode(" ", $str);
 			$len = count($keywords);
 			if ($len >= 1) {
-				$sql = "SELECT * FROM VOTE_INFO WHERE (Title LIKE '%$keywords[0]%' OR DescInfo LIKE '%$keywords[0]%')";
+				// 先以标题中有相似字符串的投票为主
+				$sql = "SELECT * FROM VOTE_INFO WHERE Title LIKE '%$keywords[0]%' ";
 				for ($i = 1; $i < $len; $i++) {
-					$sql = $sql."AND (Title LIKE '%$keywords[$i]%' OR DescInfo LIKE '%$keywords[$i]%')";
+					$sql = $sql."AND Title LIKE '%$keywords[$i]%' ";
 				}
 				$sql = $sql." ORDER BY CreateTime DESC";
 				$rawvotes = $this->Vote_model->get_search($sql);
@@ -402,6 +414,52 @@ class Page extends CI_Controller {
 					$vote['owneravatar'] = $owner->Avatar;
 					$vote['id'] = $v->ID;
 					$vote['status'] = $v->Status;
+					$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+					$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+					$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
+					// 为登录，默认为-1
+					if ($flag == false) {
+						$vote['participate'] = -1;
+						$vote['follow'] = -1;
+					}
+					// 登录状态，1表示参与/关注过，0表示未参与/未关注
+					else {
+						$vote['participate'] = $this->User_model->is_participated($userid, $v->ID);
+						$vote['follow'] = $this->User_model->is_followed($userid, $v->ID);
+					}
+
+					$rawoptions = $this->Vote_model->get_options($v->ID);
+					$vote['options'] = array();
+					foreach ($rawoptions as $raw) {
+						$option['title'] = $raw->Title;
+						$option['desc'] = $raw->DescInfo;
+						$option['path'] = $raw->Image;
+						$option['support'] = $raw->Support;
+						$option['id'] = $raw->ID;
+						array_push($vote['options'], $option);
+					}
+					$vote['title'] = $v->Title;
+					$vote['desc'] = $v->DescInfo;
+					$vote['createtime'] = $v->CreateTime;
+					array_push($data['votes'], $vote);
+				}
+				// 再搜出标题中没有，但描述中有的
+				$sql = "SELECT * FROM VOTE_INFO WHERE (Title NOT LIKE '%$keywords[0]%' AND DescInfo Like '%$keywords[0]%') ";
+				for ($i = 1; $i < $len; $i++) {
+					$sql = $sql."AND (Title NOT LIKE '%$keywords[$i]%' AND DescInfo Like '%$keywords[$i]%') ";
+				}
+				$sql = $sql." ORDER BY CreateTime DESC";
+				$rawvotes = $this->Vote_model->get_search($sql);
+				foreach ($rawvotes as $v) {
+					$vote = array();
+					$owner = $this->User_model->get($v->OwnerID);
+					$vote['ownername'] = $owner->Name;
+					$vote['owneravatar'] = $owner->Avatar;
+					$vote['id'] = $v->ID;
+					$vote['status'] = $v->Status;
+					$vote['part_num'] = $this->Vote_model->get_participate_num($vote['id']);
+					$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
+					$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 					// 为登录，默认为-1
 					if ($flag == false) {
 						$vote['participate'] = -1;
@@ -430,7 +488,7 @@ class Page extends CI_Controller {
 				}
 
 				$this->load->view('header', $data);
-				$this->load->view('home');
+				$this->load->view('searchresult');
 				$this->load->view('footer');
 			}
 			else 

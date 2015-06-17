@@ -5,7 +5,7 @@ class User_model extends CI_Model{
 	function __construct(){
 		parent::__construct();
 	}
-	public function authen() {
+	function authen() {
 		$this->db->where('Name', $this->input->post('Name'));
 		$this->db->where('Pwd', md5($this->input->post('Pwd')));
 		$q = $this->db->get('USER_INFO');
@@ -20,7 +20,7 @@ class User_model extends CI_Model{
 			return -1;
 		}
 	}
-	public function add(){
+	function add(){
 		$data['Email'] = $this->input->post('Email');
 		$data['Name'] = $this->input->post('Name');
 		$data['Pwd'] = $this->input->post('Pwd');
@@ -118,6 +118,37 @@ class User_model extends CI_Model{
 			$this->db->insert("VOTE_FOLLOW", $data);
 			echo "关注";
 		}
+	}
+
+
+
+	function delete_user($user_id) {
+		$record_query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE UserID = $user_id");
+		$records = $record_query->result();
+		// 把对应选项的Support值减一
+		foreach ($records as $record) {
+			$option_id = $record->OptionID;
+			$option_query = $this->db->query("SELECT * FROM VOTE_OPTION WHERE OptionID = $option_id");
+			if ($option_query->num_rows() != 1) {
+				echo "选项ID出错";
+			}
+			else {
+				$option['Support'] = $option_query->row()->Support - 1;
+				$this->db->update("VOTE_OPTION", $option, array("OptionID" => $option_id));
+			}
+		}
+		$this->db->delete("VOTE_RECORD", array("UserID" => $user_id));
+		$this->db->delete("VOTE_FOLLOW", array("UserID" => $user_id));
+		$vote_query = $this->db->query("SELECT * FROM VOTE_INFO WHERE OwnerID = $user_id");
+		$votes = $vote_query->result();
+		foreach ($votes as $vote) 
+			$this->Vote_model->delete_vote($vote->ID);
+	}
+	
+
+	function get_all_users() {
+		$query = $this->db->query("SELECT * FROM USER_INFO");
+		return $query->result();
 	}
 
 }
