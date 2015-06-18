@@ -37,6 +37,13 @@ class Vote_model extends CI_Model {
 		$query = $this->db->get_where('VOTE_OPTION', array('VoteID' => $vote_id));
 		return $query->result();
 	}
+
+	function get_option_by_id($option_id) {
+		$query = $this->db->get_where('VOTE_OPTION', array('ID' => $option_id));
+		if ($query->num_rows() == 1)
+			return $query->row();
+		else return NULL;
+	}
 	function get($id) {
 		$query = $this->db->get_where("VOTE_INFO", array('ID' => $id));
 		if ($query->num_rows() == 1)
@@ -82,7 +89,7 @@ class Vote_model extends CI_Model {
 	}
 
 	function get_comments($vote_id) {
-		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE VoteID = $vote_id AND Comment IS NOT NULL");
+		$query = $this->db->query("SELECT * FROM VOTE_RECORD WHERE VoteID = $vote_id AND Comment IS NOT NULL ORDER BY CreateTime DESC");
 		return $query->result();
 	}
 	function get_participate_num($vote_id) {

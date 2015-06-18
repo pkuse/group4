@@ -65,6 +65,7 @@ li {
 .inline-search {
     min-height: 0;
     height: auto;
+	margin-right: 3em;
 }
 
 .inline-search input {

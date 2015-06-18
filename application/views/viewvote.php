@@ -76,6 +76,10 @@
                 <div class="media-body">
                     <h4 class="media-heading"><?php echo $comment['ownername'] ?></h4>
                     <?php echo $comment["content"] ?>
+                    <div style="float:right">
+                    <p style="font-size:80%; color:grey"><?php echo $comment["time"] ?></p>
+                    </div> 
+
                 </div>
             </li>
         <?php endforeach; ?>

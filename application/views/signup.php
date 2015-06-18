@@ -1,5 +1,5 @@
 <div class="container">
-<div style="padding: 60px 100px 10px;">
+<div data-commentouted-style="padding: 60px 100px 10px;">
 	<!--form class="form-signin"-->
 	<?php echo form_open('page/sign', array('class' => 'form-signin')) ?>
 	<h2 class="form-signin-heading">新用户注册</h2>

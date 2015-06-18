@@ -47,9 +47,9 @@
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
 				</div>
-				<div class="caption" style="height:200px">
-					<h3><a href="/index.php/vote/view/<?php echo $vote['id']?>"><?php echo $vote["title"] ?></a></h3>
-					<p>描述：<?php echo $vote["desc"] ?></p>
+				<div class="caption">
+					<h3 class="desc"><a href="/index.php/vote/view/<?php echo $vote['id']?>"><?php echo $vote["title"] ?></a></h3>
+					<p class="desc">描述：<?php echo $vote["desc"] ?></p>
 					<p style="font-size:80%">
 						<span class="glyphicon glyphicon-user"></span>
 						<?php echo $vote['part_num'] ?>&nbsp

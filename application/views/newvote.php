@@ -93,7 +93,7 @@
 		</div>
 		<hr />
 		<div class="row" style="text-align: center">
-			<button type="submit" style="margin: auto" class="btn btn-primary">Submit</button>
+			<button type="submit" style="margin: auto" class="btn btn-primary">发布投票</button>
 		</div>
 	<?php echo form_close() ?>
 </div>

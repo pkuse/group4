@@ -143,6 +143,7 @@ class User_model extends CI_Model{
 		$votes = $vote_query->result();
 		foreach ($votes as $vote) 
 			$this->Vote_model->delete_vote($vote->ID);
+		$this->db->delete("USER_INFO", array("ID" => $user_id));
 	}
 	
 

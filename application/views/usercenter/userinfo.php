@@ -11,6 +11,7 @@
 				<p style="margin-top:1em">邮箱: <?php echo $useremail ?></p>
 			</tr>
 			<tr>
+
 				<p style="margin-top:1em">
 					<textarea font="微软雅黑" rows="5" cols="60" readonly="readonly" id="description3" placeholder="签名:"><?php echo $userdesc ?></textarea>
                 </p>

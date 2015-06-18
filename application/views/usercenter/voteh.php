@@ -59,7 +59,7 @@
 						<span class="glyphicon glyphicon-star"></span>
 						<?php echo $vote['follow_num'] ?>&nbsp
                     </p>
-					<p style="color:#3366CC; font-size:80%">我投给了选项<?php echo $vote['record']['option'] ?></p>
+					<p class="desc" style="color:#3366CC; font-size:80%">我投给了选项: <?php echo $vote['record']['option'] ?></p>
 					<?php if ($vote['record']['comment'] != NULL): ?>
 					<p class="desc" style="color:#3366CC; font-size:80%">我的评论：<?php echo $vote['record']['comment'] ?></p>
 					<?php else: ?>

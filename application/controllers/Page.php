@@ -304,7 +304,8 @@ class Page extends CI_Controller {
 				$vote['comment_num'] = $this->Vote_model->get_comment_num($vote['id']);
 				$vote['follow_num'] = $this->Vote_model->get_follow_num($vote['id']);
 				$record = $this->Vote_model->get_voted_record($userid, $raw_v->ID);
-				$vote['record']['option'] = $record->OptionID;
+				$record_option = $this->Vote_model->get_option_by_id($record->OptionID);
+				$vote['record']['option'] = $record_option->Title;
 				$vote['record']['comment'] = $record->Comment;
 				$vote['record']['createtime'] = $record->CreateTime;
 				$raw_options = $this->Vote_model->get_options($raw_v->ID);

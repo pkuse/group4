@@ -92,6 +92,7 @@ class Admin extends CI_Controller {
 		if (!isset($admin_id)){
 			echo "你没有权限！";
 		}else {
+			
 			$admin = $this->Admin_model->get($admin_id);
 			$data['name'] = $admin->Name;
 			$user_id = $this->input->get("user_id");

@@ -46,9 +46,12 @@
                     <button class="button" type="submit"><span class="mif-search"></span></button>
                 </div>
             </form>
-            <a class="app-bar-element place-right fg-white" href="/index.php/signup">注册</a>
-            <div class="app-bar-element place-right">
-                <a class="dropdown-toggle fg-white"><span class="mif-enter"></span> 登录</a>
+            <ul class="app-bar-menu place-right fg-white">
+			<li>
+			<a href="/index.php/signup">注册</a>
+			</li>
+			<li>
+                <a class="dropdown-toggle"><span class="mif-enter"></span> 登录</a>
                 <div class="app-bar-drop-container bg-white fg-dark place-right" data-role="dropdown" data-no-close="true">
                     <div class="padding20">
                         <!--form-->
@@ -83,7 +86,8 @@
                     <?php echo form_close() ?>
                     <!--/form-->
                 </div>
-            </div>
+            </li>
+			</ul>
         </div>
     </div>
     <?php else: ?>
@@ -104,7 +108,7 @@
                     <li><a href="/index.php/page/logout">退出登录</a></li>
                 </ul>
             </li>
-            <li><a class="app-bar-element place-right fg-white" href="/index.php/vote/publish_vote">发布投票</a></li>
+            <li><a href="/index.php/vote/publish_vote">发布投票</a></li>
         </ul>
     </div>
     <?php endif; ?>

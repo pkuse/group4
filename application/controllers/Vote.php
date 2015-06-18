@@ -44,7 +44,7 @@ class Vote extends CI_Controller {
 				'upload_path' => './img/vote_pics/',
 				'allowed_types' => 'gif|jpg|jpeg|png',
 				'file_name' => 'vote_pic',
-				'max_size' => '2048'
+				'max_size' => '20480'
 			);
 
 			$this->load->library('upload', $upload_config);
@@ -58,6 +58,7 @@ class Vote extends CI_Controller {
 				if (!$this->upload->do_upload($options_pic_field)) {
 					$data['error'] = $this->upload->display_errors();
 					$flag = FALSE;
+					echo $data['error'];
 					break;
 				}
 				$file_name = $this->upload->data('file_name');
@@ -71,7 +72,6 @@ class Vote extends CI_Controller {
 				for ($i = 0; $i < $options_count; $i++)
 					$this->Vote_model->add_option($vote_id, $options_title[$i], $options_desc[$i], $options_path[$i]);
 				redirect('/');
-			
 			}
 		}
 	}
@@ -140,6 +140,7 @@ class Vote extends CI_Controller {
 			$comment['ownername'] = $owner->Name;
 			$comment['owneravatar'] = $owner->Avatar;
 			$comment['content'] = $rowrecord->Comment;
+			$comment['time'] = $rowrecord->CreateTime;
 			array_push($comments, $comment);
 		}
 		$vote['options'] = $options;

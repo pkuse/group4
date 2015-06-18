@@ -48,9 +48,9 @@
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
 				</div>
-				<div class="caption" style="height:200px">
-					<h3><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
-					<p>描述：<?php echo $vote["desc"] ?></p>
+				<div class="caption">
+					<h3 class="desc"><a href="/index.php/vote/view/<?php echo $vote["id"]?>"><?php echo $vote["title"] ?></a></h3>
+					<p class="desc">描述：<?php echo $vote["desc"] ?></p>
 					<p>
 						<p style="font-size:80%">
 							<span class="glyphicon glyphicon-user"></span>
@@ -61,7 +61,7 @@
 							<?php echo $vote['follow_num'] ?>&nbsp
 						</p>
 						<?php if($vote['status'] == 0): ?>
-							<p>已关闭</p>
+							<button role="button" class="btn btn-primary" disabled='disabled'>已关闭</button>
 						<?php else: ?>
 							<button role="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-voteid=<?php echo $vote['id'] ?>>关闭投票</button>
 						<?php endif ?>
